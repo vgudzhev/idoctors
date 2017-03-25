@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Spring Framework Guru</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <div th:if="${not #lists.isEmpty(doctors)}">
+        <h2>Doctors List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>View</th>
+                <th>Edit</th>
+            </tr>
+            <tr th:each="doctor : ${doctors}">
+                <td th:text="${doctor.id}"><a href="/doctors/${doctor.id}">Id</a></td>
+                <td th:text="${doctor.firstName}">First name</td>
+                <td th:text="${doctor.lastName}">Last name</td>
+                <td th:text="${doctor.email}">Email</td>
+                <td><a th:href="${ '/doctors/id/' + doctor.id}">View</a></td>
+                <td><a th:href="${'/doctors/edit/' + doctor.id}">Edit</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -9,4 +9,5 @@ public class IdoctorsApp {
 	public static void main(String[] args) {
 		SpringApplication.run(IdoctorsApp.class, args);
 	}
+	
 }
