@@ -42,12 +42,10 @@ public class DoctorController {
 		return "doctorform";
 	}
 
-	@RequestMapping(value = "/doctor", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveDoctor(Doctor doctor) {
-		System.out.println("---");
 		doctorService.saveDoctor(doctor);
-		System.out.println("---");
-		return "redirect:/doctor/id/" + doctor.getId();
+		return "redirect:/doctors/id/" + doctor.getId();
 	}
 
 }
