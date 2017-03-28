@@ -1,10 +1,11 @@
-package bg.idoctors.services;
+package bg.idoctors.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bg.idoctors.domain.Doctor;
 import bg.idoctors.repositories.DoctorRepository;
+import bg.idoctors.services.DoctorService;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
