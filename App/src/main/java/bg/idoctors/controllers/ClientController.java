@@ -1,0 +1,15 @@
+/**
+ * @author Shukri Shukriev
+ *
+ */
+package bg.idoctors.controllers;
+
+import java.security.Principal;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@Controller
+public class ClientController {
+	
+}
