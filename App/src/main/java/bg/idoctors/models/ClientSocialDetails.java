@@ -4,27 +4,29 @@
  */
 package bg.idoctors.models;
 
-import org.springframework.social.security.SocialUser;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class ClientSocialDetails extends SocialUser {
-	private Integer id;
+public class ClientSocialDetails implements UserDetails {
+	private static final long serialVersionUID = 1L;
+	
+	private String id;
 	private String firstName;
 	private String lastName;
+	private String email;
 	private Role role;
 	private SocialMediaService socialMediaProvider;
 	
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -44,6 +46,17 @@ public class ClientSocialDetails extends SocialUser {
 		this.lastName = lastName;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public Role getRole() {
 		return role;
 	}
@@ -59,17 +72,22 @@ public class ClientSocialDetails extends SocialUser {
 	public void setSocialMediaProvider(SocialMediaService socialMediaProvider) {
 		this.socialMediaProvider = socialMediaProvider;
 	}
+	
+	public ClientSocialDetails(){}
+	
+	public ClientSocialDetails(String id, String email, String first_name, String last_name){
+		
+	}
 
-	public ClientSocialDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-		super(username, password, authorities);
+    public static Builder getBuilder() {
+        return new Builder();
     }
-
-	public static class Builder {
-		private Integer id;
-		private String username;
+	
+    public static class Builder {
+		private String id;
 		private String firstName;
 		private String lastName;
-		private String password;
+		private String email;
 		private Role role;
 		private SocialMediaService socialMediaProvider;
 		private Set<GrantedAuthority> authorities;
@@ -78,13 +96,8 @@ public class ClientSocialDetails extends SocialUser {
 			this.authorities = new HashSet<>();
 		}
 		
-		public Builder id(Integer id){
+		public Builder id(String id){
 			this.id = id;
-			return this;
-		}
-		
-		public Builder username(String username){
-			this.username = username;
 			return this;
 		}
 		
@@ -98,13 +111,8 @@ public class ClientSocialDetails extends SocialUser {
 			return this;
 		}
 		
-		public Builder password(String password){
-			if(password == null){
-				this.password = "SocialUserLogin";
-			}
-			
-			this.password = password;
-			
+		public Builder email(String email){
+			this.email = email;
 			return this;
 		}
 		
@@ -124,8 +132,7 @@ public class ClientSocialDetails extends SocialUser {
 		
 		
 		public ClientSocialDetails build() {
-			ClientSocialDetails client = new ClientSocialDetails(username, password, authorities);
-			
+			ClientSocialDetails client = new ClientSocialDetails(id, email, firstName, lastName);
 			client.id = id;
 			client.firstName = firstName;
 			client.lastName = lastName;
@@ -134,5 +141,47 @@ public class ClientSocialDetails extends SocialUser {
 			
 			return client;
 		}
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -34,8 +34,11 @@ public class SocialContext implements SocialConfigurer{
 	
 	@Override
 	public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
-		cfConfig.addConnectionFactory(new FacebookConnectionFactory(env.getProperty("facebook.app.id"),
-																	env.getProperty("facebook.app.secred")));
+		FacebookConnectionFactory facebookFactory = new FacebookConnectionFactory(env.getProperty("facebook.app.id"),
+				env.getProperty("facebook.app.secred"));
+		facebookFactory.setScope("public_profile");
+		
+		cfConfig.addConnectionFactory(facebookFactory);
 		
 	}
 

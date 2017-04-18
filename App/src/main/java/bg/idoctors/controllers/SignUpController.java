@@ -4,6 +4,9 @@
  */
 package bg.idoctors.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +20,8 @@ public class SignUpController {
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String redirectRequestToFacebookLogin(){
-		return "redirect:/client";
+		SecurityContextHolder.getContext().getAuthentication();
+		return "redirect:/client/register";
 	}	
 	
 }

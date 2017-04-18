@@ -5,8 +5,8 @@
 package bg.idoctors.services;
 
 import bg.idoctors.domain.Client;
-import bg.idoctors.models.ClientRegistrationForm;
+import bg.idoctors.models.ClientSocialDetails;
 
 public interface ClientService {
-	public Client registerNewClientAccount(ClientRegistrationForm clientRegistrationForm);
+	public Client registerNewClientAccount(Client client);
 }
