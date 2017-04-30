@@ -20,8 +20,6 @@ public class SignUpController {
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String redirectRequestToFacebookLogin(){
-		SecurityContextHolder.getContext().getAuthentication();
 		return "redirect:/client/register";
 	}	
-	
 }

@@ -19,6 +19,11 @@ import org.springframework.security.core.GrantedAuthority;
 @Table(name = "authority")
 public class Authority implements GrantedAuthority{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
     @Column(unique = true, nullable = false)
     private String authority;
@@ -26,6 +31,10 @@ public class Authority implements GrantedAuthority{
     @ManyToMany(mappedBy = "authorities")
     private List<Client> clients = new ArrayList<>();
     
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+
 	@Override
 	public String getAuthority() {
 		// TODO Auto-generated method stub

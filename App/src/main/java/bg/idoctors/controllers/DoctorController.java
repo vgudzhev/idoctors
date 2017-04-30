@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import bg.idoctors.domain.Doctor;
 import bg.idoctors.services.DoctorService;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
 @RequestMapping("/doctors")

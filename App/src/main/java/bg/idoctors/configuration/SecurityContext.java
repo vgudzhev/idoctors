@@ -4,6 +4,9 @@
  */
 package bg.idoctors.configuration;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +18,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,7 +64,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 								"/signin/**", 
 								"/signup/**", 
 								"/client/register/**").permitAll()
-					.antMatchers("/**").hasRole("USER")
+					.antMatchers("/*").hasRole("USER")
 			.and()
 				.apply(new SpringSocialConfigurer())
 			.and()
@@ -75,8 +80,10 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 											.socialSignInProvider(client.getSocialMediaSignInProvider())
 											.build();
 		
-		Authentication authentication = new UsernamePasswordAuthenticationToken(clientDetails, null, client.getAuthorities());
-		
+		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+	    authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+	
+	    Authentication authentication = new UsernamePasswordAuthenticationToken(clientDetails, null, authorities);		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 	
