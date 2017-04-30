@@ -12,12 +12,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+
+import bg.idoctors.repositories.ClientDetailRepositoryService;
 
 @Component
 public class SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
@@ -28,11 +32,16 @@ public class SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 	protected RedirectStrategy getRedirectStrategy() {
 		return this.redirectStrategy;
 	}
+	
+	@Override
+	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
+		this.redirectStrategy = redirectStrategy;
+	}
 
 	@Override
 	protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-		super.handle(request, response, authentication);
+//		super.handle(request, response, authentication);
 		
 		String targetUrl = determineTargetUrl(authentication);
 
@@ -42,11 +51,6 @@ public class SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
         }
 
         redirectStrategy.sendRedirect(request, response, targetUrl);
-	}
-
-	@Override
-	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
-		this.redirectStrategy = redirectStrategy;
 	}
 	
 	protected String determineTargetUrl(Authentication authentication) {
@@ -62,4 +66,9 @@ public class SuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
         return url;
     }
 
+	@Bean
+	public SuccessHandler successHandlerService(){
+		return new SuccessHandler();
+	}
+	
 }

@@ -5,10 +5,18 @@
 package bg.idoctors.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
@@ -21,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 
+import bg.idoctors.configuration.SecurityContext;
 import bg.idoctors.domain.Client;
 import bg.idoctors.models.SocialMediaService;
 import bg.idoctors.services.ClientService;
@@ -42,7 +51,7 @@ public class ClientController {
 	}
 	
 	@RequestMapping(value ="/client/register")
-	private Client createClientAccount(Client client, BindingResult result, WebRequest request) {
+	private String createClientAccount(Client client, BindingResult result, WebRequest request) {
 		Client registered = null;
 		
 		try {
@@ -62,10 +71,11 @@ public class ClientController {
 							   .build();
 			
 			registered = service.registerNewClientAccount(client);
+		    SecurityContext.loginInUser(registered);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
 		
-		return registered;
+		return "redirect:/";
 	}
 }
